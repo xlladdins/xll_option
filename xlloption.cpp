@@ -8,7 +8,9 @@
 
 using namespace xll;
 
+struct bm : public fms::option_nvi<double, double, double> {};
 struct om : public fms::option_model<fms::variate::normal<double>, double, double, double> {};
+//using om = fms::option_model<fms::variate::normal<double>, double, double, double>;
 
 AddIn xai_option_model_normal(
 	Function(XLL_HANDLE, "xll_option_model_normal", "OPTION.MODEL.NORMAL")
