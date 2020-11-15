@@ -6,17 +6,26 @@
 
 namespace xll {
 
-	template<class M>
-	inline double xll_option(HANDLEX m, double (fms::option<M>::*pmf)(double,double,double) const, double f, double s, double k)
+	// Option parameterized by model and pointer to member function
+	template<class M, class... Args>
+	inline double xll_option(HANDLEX m, double (fms::option<M>::*pmf)(Args... args) const, Args... args)
 	{
-		handle<fms::variate_base<>> m_(m);
+		try {
+			handle<fms::variate_base<>> m_(m);
 
-		if (m_) {
-			M* pm = m_.as<M>();
-			if (pm) {
-				const auto& o = fms::option(*pm);
-				return (o.*pmf)(f, s, k);
+			if (m_) {
+				M* pm = m_.as<M>();
+				if (pm) {
+					const auto& o = fms::option(*pm);
+					return (o.*pmf)(args...);
+				}
 			}
+		}
+		catch (const std::exception& ex) {
+			XLL_ERROR(ex.what());
+		}
+		catch (...) {
+			XLL_ERROR("xll_option: unknown exception");
 		}
 
 		return std::numeric_limits<double>::quiet_NaN();
@@ -27,5 +36,28 @@ namespace xll {
 	{
 		return xll_option<M>(m, &fms::option<M>::value, f, s, k);
 	}
+	template<class M>
+	inline double xll_option_delta(HANDLEX m, double f, double s, double k)
+	{
+		return xll_option<M>(m, &fms::option<M>::delta, f, s, k);
+	}
+	template<class M>
+	inline double xll_option_gamma(HANDLEX m, double f, double s, double k)
+	{
+		return xll_option<M>(m, &fms::option<M>::gamma, f, s, k);
+	}
+	template<class M>
+	inline double xll_option_vega(HANDLEX m, double f, double s, double k)
+	{
+		return xll_option<M>(m, &fms::option<M>::vega, f, s, k);
+	}
+	
+	template<class M>
+	inline double xll_option_implied(HANDLEX m, double f, double s, double k, double s0, size_t n, double eps)
+	{
+		return xll_option<M>(m, &fms::option<M>::implied, f, s, k, s0, n, eps);
+	}
+	
+
 }
 
