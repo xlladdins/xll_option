@@ -2,15 +2,15 @@
 #include <cmath>
 //Uncomment to build for versions of Excel prior to 2007
 //#define XLOPERX XLOPER
-#include "../../keithalewis/fmsoption/fms_option.h"
+#include "xlloption.h"
 #include "../../keithalewis/fmsoption/fms_normal.h"
-#include "xll/xll/xll.h"
 
+//using obase = fms::option_base<double, double, double>;
+
+using namespace fms;
 using namespace xll;
 
-struct bm : public fms::option_nvi<double, double, double> {};
-struct om : public fms::option_model<fms::variate::normal<double>, double, double, double> {};
-//using om = fms::option_model<fms::variate::normal<double>, double, double, double>;
+using option_model_normal = fms::option<fms::variate::normal<>>;
 
 AddIn xai_option_model_normal(
 	Function(XLL_HANDLE, "xll_option_model_normal", "OPTION.MODEL.NORMAL")
@@ -21,18 +21,9 @@ AddIn xai_option_model_normal(
 HANDLEX WINAPI xll_option_model_normal()
 {
 #pragma XLLEXPORT
-	//handle<fms::option_model<fms::variate::normal<>>> h(new fms::option_model<fms::variate::normal<>>{});
-	//handle<fms::option_nvi<>> h(new fms::option_model<fms::variate::normal<>>{});
-	//handle<foo> h(new foo{});
+	handle<variate_base<>> m(new variate::normal<>{});
 
-	//fms::option_nvi<>* pm = new fms::option_model<fms::variate::normal<>>();
-	//handle<fms::option_nvi<>> h(pm);
-	//using ob = fms::option_nvi<double, double, double>;
-	//using om = fms::option_model<fms::variate::normal<double>, double, double, double>;
-
-	handle<om> h(new om{});
-
-	return h.get();
+	return m.get();
 }
 
 AddIn xai_option_value(
@@ -50,7 +41,5 @@ AddIn xai_option_value(
 double WINAPI xll_option_value(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	handle<om> m_(m);
-
-	return m_->value(f, s, k);
+	return xll_option_value<variate::normal<>>(m, f, s, k);
 }
