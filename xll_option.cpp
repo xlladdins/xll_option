@@ -2,27 +2,23 @@
 #include <cmath>
 //Uncomment to build for versions of Excel prior to 2007
 //#define XLOPERX XLOPER
-#include "xlloption.h"
+#include "xll_option.h"
 #include "../../keithalewis/fmsoption/fms_normal.h"
-
-//using obase = fms::option_base<double, double, double>;
 
 using namespace fms;
 using namespace xll;
 
-using option_model_normal = fms::option<fms::variate::normal<>>;
-
-AddIn xai_option_model_normal(
-	Function(XLL_HANDLE, "xll_option_model_normal", "OPTION.MODEL.NORMAL")
+AddIn xai_variate_normal(
+	Function(XLL_HANDLE, "xll_variate_normal", "VARIATE.NORMAL")
 	.Args({
 		Arg(XLL_DOUBLE, "mu", "is the mean. Default is 0."),
 		Arg(XLL_DOUBLE, "sigma", "is the standard deviation. Default is 1.")
 	})
 	.Category("Option")
-	.FunctionHelp("Return handle to normal option model.")
+	.FunctionHelp("Return handle to normal variate.")
 	.Uncalced()
 );
-HANDLEX WINAPI xll_option_model_normal(double mu, double sigma)
+HANDLEX WINAPI xll_variate_normal(double mu, double sigma)
 {
 #pragma XLLEXPORT
 	handle<variate_base<>> m(new variate::normal<>(mu, sigma));
@@ -55,8 +51,8 @@ AddIn xai_option_delta(
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the volatility."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
-		})
-		.FunctionHelp("Return the option delta.")
+	})
+	.FunctionHelp("Return the option delta.")
 	.Category("Option")
 	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
 );
@@ -73,8 +69,8 @@ AddIn xai_option_gamma(
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the volatility."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
-		})
-		.FunctionHelp("Return the option gamma.")
+	})
+	.FunctionHelp("Return the option gamma.")
 	.Category("Option")
 	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
 );
@@ -91,8 +87,8 @@ AddIn xai_option_vega(
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the volatility."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
-		})
-		.FunctionHelp("Return the option vega.")
+	})
+	.FunctionHelp("Return the option vega.")
 	.Category("Option")
 	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
 );
@@ -112,8 +108,8 @@ AddIn xai_option_implied(
 		Arg(XLL_DOUBLE, "s0", "is the initial vol guess. Default is 0.1"),		
 		Arg(XLL_WORD, "n", "is the maximum number of iterations. Default is 10."),
 		Arg(XLL_DOUBLE, "eps", "is value precision. Default is sqrt of machine epsilon."),
-		})
-		.FunctionHelp("Return the option implied.")
+	})
+	.FunctionHelp("Return the option implied.")
 	.Category("Option")
 	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
 );

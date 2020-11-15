@@ -171,7 +171,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="xlloption.cpp" />
+    <ClCompile Include="xll_option.cpp" />
+    <ClCompile Include="xll_variate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="setup.bat" />
@@ -182,7 +183,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="xlloption.h" />
+    <ClInclude Include="xll_option.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

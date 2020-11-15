@@ -15,7 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="xlloption.cpp">
+    <ClCompile Include="xll_variate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xll_option.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -25,7 +28,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="xlloption.h">
+    <ClInclude Include="xll_option.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
