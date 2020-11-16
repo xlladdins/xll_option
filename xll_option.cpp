@@ -3,28 +3,9 @@
 //Uncomment to build for versions of Excel prior to 2007
 //#define XLOPERX XLOPER
 #include "xll_option.h"
-#include "../../keithalewis/fmsoption/fms_variate_normal.h"
 
 using namespace fms;
 using namespace xll;
-
-AddIn xai_variate_normal(
-	Function(XLL_HANDLE, "xll_variate_normal", "VARIATE.NORMAL")
-	.Args({
-		Arg(XLL_DOUBLE, "mu", "is the mean. Default is 0."),
-		Arg(XLL_DOUBLE, "sigma", "is the standard deviation. Default is 1.")
-	})
-	.Category("Option")
-	.FunctionHelp("Return handle to normal variate.")
-	.Uncalced()
-);
-HANDLEX WINAPI xll_variate_normal(double mu, double sigma)
-{
-#pragma XLLEXPORT
-	handle<variate_base<>> m(new variate_model(variate::normal(mu, sigma)));
-
-	return m.get();
-}
 
 AddIn xai_option_value(
 	Function(XLL_DOUBLE, "xll_option_value", "OPTION.VALUE")
@@ -43,7 +24,7 @@ double WINAPI xll_option_value(HANDLEX m, double f, double s, double k)
 #pragma XLLEXPORT
 	return xll_option(m, &option<variate_base<>>::value, f, s, k);
 }
-#if 0
+
 AddIn xai_option_delta(
 	Function(XLL_DOUBLE, "xll_option_delta", "OPTION.DELTA")
 	.Args({
@@ -59,7 +40,7 @@ AddIn xai_option_delta(
 double WINAPI xll_option_delta(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option_delta<variate::normal<>>(m, f, s, k);
+	return xll_option(m, &option<variate_base<>>::delta, f, s, k);
 }
 
 AddIn xai_option_gamma(
@@ -77,7 +58,7 @@ AddIn xai_option_gamma(
 double WINAPI xll_option_gamma(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option_gamma<variate::normal<>>(m, f, s, k);
+	return xll_option(m, &option<variate_base<>>::gamma, f, s, k);
 }
 
 AddIn xai_option_vega(
@@ -95,7 +76,7 @@ AddIn xai_option_vega(
 double WINAPI xll_option_vega(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option_vega<variate::normal<>>(m, f, s, k);
+	return xll_option(m, &option<variate_base<>>::vega, f, s, k);
 }
 
 AddIn xai_option_implied(
@@ -116,6 +97,5 @@ AddIn xai_option_implied(
 double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double s0, WORD n, double eps)
 {
 #pragma XLLEXPORT
-	return xll_option_implied<variate::normal<>>(m, f, v, k, s0, n, eps);
+	return xll_option(m, &option<variate_base<>>::implied, f, v, k, s0, static_cast<size_t>(n), eps);
 }
-#endif // 0
