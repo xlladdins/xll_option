@@ -41,7 +41,7 @@ AddIn xai_option_value(
 double WINAPI xll_option_value(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option_value<variate::normal<>>(m, f, s, k);
+	return xll_option(m, &option<variate_base<>>::value, f, s, k);
 }
 #if 0
 AddIn xai_option_delta(
@@ -118,4 +118,4 @@ double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double
 #pragma XLLEXPORT
 	return xll_option_implied<variate::normal<>>(m, f, v, k, s0, n, eps);
 }
-#endif
+#endif // 0
