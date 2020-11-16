@@ -3,7 +3,7 @@
 //Uncomment to build for versions of Excel prior to 2007
 //#define XLOPERX XLOPER
 #include "xll_option.h"
-#include "../../keithalewis/fmsoption/fms_normal.h"
+#include "../../keithalewis/fmsoption/fms_variate_normal.h"
 
 using namespace fms;
 using namespace xll;
@@ -21,7 +21,7 @@ AddIn xai_variate_normal(
 HANDLEX WINAPI xll_variate_normal(double mu, double sigma)
 {
 #pragma XLLEXPORT
-	handle<variate_base<>> m(new variate::normal<>(mu, sigma));
+	handle<variate_base<>> m(new variate_model(variate::normal(mu, sigma)));
 
 	return m.get();
 }
@@ -43,7 +43,7 @@ double WINAPI xll_option_value(HANDLEX m, double f, double s, double k)
 #pragma XLLEXPORT
 	return xll_option_value<variate::normal<>>(m, f, s, k);
 }
-
+#if 0
 AddIn xai_option_delta(
 	Function(XLL_DOUBLE, "xll_option_delta", "OPTION.DELTA")
 	.Args({
@@ -118,3 +118,4 @@ double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double
 #pragma XLLEXPORT
 	return xll_option_implied<variate::normal<>>(m, f, v, k, s0, n, eps);
 }
+#endif
