@@ -7,7 +7,7 @@
 namespace xll {
 
 	// Option parameterized by model and pointer to member function
-	template</*class M,*/ class... Args>
+	template<class... Args>
 	inline double xll_option(HANDLEX m, double (fms::option<fms::variate_base<>>::*pmf)(Args... args) const, Args... args)
 	{
 		try {

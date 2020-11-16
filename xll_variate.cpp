@@ -9,20 +9,21 @@ static AddIn xai_variate_cdf(
 	Function(XLL_DOUBLE, "xll_variate_cdf", "VARIATE.CDF")
 	.Args({
 		Arg(XLL_HANDLEX, "m", "is a handle to the variate"),
-		Arg(XLL_DOUBLE, "s", "is the value"),
-		Arg(XLL_WORD, "n", "is the derivaive")
+		Arg(XLL_DOUBLE, "x", "is the value"),
+		Arg(XLL_DOUBLE, "s", "is the Esscher transform parameter. Default is 0."),
+		Arg(XLL_WORD, "n", "is the derivaive. Default is 0.")
 		}
 	)
-	.FunctionHelp("Return n-th derivative of cdf at s.")
+	.FunctionHelp("Return transformed n-th derivative of cdf at x.")
 	.Category("XLL")
 );
-double WINAPI xll_variate_cdf(HANDLEX m, double x, WORD n)
+double WINAPI xll_variate_cdf(HANDLEX m, double x, double s, WORD n)
 {
 #pragma XLLEXPORT
 	handle<variate_base<>> m_(m);
 
 	if (m_) {
-		return m_->cdf(x, n);
+		return m_->cdf(x, s, n);
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
