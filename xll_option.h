@@ -1,8 +1,8 @@
 // xlloption.h - Excel add-in for fmsoption
 #pragma once
 #include "xll/xll/xll.h"
-#include "../../keithalewis/fmsoption/fms_option.h"
-#include "../../keithalewis/fmsoption/fms_variate.h"
+#include "fmsoption/fms_option.h"
+#include "fmsoption/fms_variate.h"
 
 namespace xll {
 
