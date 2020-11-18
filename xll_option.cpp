@@ -1,4 +1,4 @@
-// xlloption.cpp - Sample xll project.
+// xll_option.cpp - Option value and greeks parameterized by model.
 #include <cmath>
 //Uncomment to build for versions of Excel prior to 2007
 //#define XLOPERX XLOPER
@@ -6,6 +6,8 @@
 
 using namespace fms;
 using namespace xll;
+
+using model = option<variate_base<>>;
 
 AddIn xai_option_value(
 	Function(XLL_DOUBLE, "xll_option_value", "OPTION.VALUE")
@@ -17,12 +19,12 @@ AddIn xai_option_value(
 	})
 	.FunctionHelp("Return the option value.")
 	.Category("Option")
-	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
 double WINAPI xll_option_value(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option(m, &option<variate_base<>>::value, f, s, k);
+	return xll_option(m, &model::value, f, s, k);
 }
 
 AddIn xai_option_delta(
@@ -35,12 +37,12 @@ AddIn xai_option_delta(
 	})
 	.FunctionHelp("Return the option delta.")
 	.Category("Option")
-	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
 double WINAPI xll_option_delta(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option(m, &option<variate_base<>>::delta, f, s, k);
+	return xll_option(m, &model::delta, f, s, k);
 }
 
 AddIn xai_option_gamma(
@@ -53,12 +55,12 @@ AddIn xai_option_gamma(
 	})
 	.FunctionHelp("Return the option gamma.")
 	.Category("Option")
-	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
 double WINAPI xll_option_gamma(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option(m, &option<variate_base<>>::gamma, f, s, k);
+	return xll_option(m, &model::gamma, f, s, k);
 }
 
 AddIn xai_option_vega(
@@ -71,12 +73,12 @@ AddIn xai_option_vega(
 	})
 	.FunctionHelp("Return the option vega.")
 	.Category("Option")
-	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
 double WINAPI xll_option_vega(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option(m, &option<variate_base<>>::vega, f, s, k);
+	return xll_option(m, &model::vega, f, s, k);
 }
 
 AddIn xai_option_implied(
@@ -87,15 +89,15 @@ AddIn xai_option_implied(
 		Arg(XLL_DOUBLE, "v", "is the option value."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
 		Arg(XLL_DOUBLE, "s0", "is the initial vol guess. Default is 0.1"),		
-		Arg(XLL_WORD, "n", "is the maximum number of iterations. Default is 10."),
+		Arg(XLL_WORD,   "n", "is the maximum number of iterations. Default is 10."),
 		Arg(XLL_DOUBLE, "eps", "is value precision. Default is sqrt of machine epsilon."),
 	})
 	.FunctionHelp("Return the option implied.")
 	.Category("Option")
-	//.HelpTopic("https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tgamma-tgammaf-tgammal")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
 double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double s0, WORD n, double eps)
 {
 #pragma XLLEXPORT
-	return xll_option(m, &option<variate_base<>>::implied, f, v, k, s0, static_cast<size_t>(n), eps);
+	return xll_option(m, &model::implied, f, v, k, s0, static_cast<size_t>(n), eps);
 }

@@ -1,4 +1,4 @@
-// xll_variate_normal.cpp - Excel add-in for normal variate
+// xll_variate_normal.cpp - Excel add-in for normal variates
 #include "xll/xll/xll.h"
 #include "fmsoption/fms_variate_normal.h"
 #include "fmsoption/fms_variate.h"

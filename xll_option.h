@@ -3,6 +3,8 @@
 #include "fmsoption/fms_option.h"
 #include "fmsoption/fms_variate.h"
 #include "xll/xll/xll.h"
+#include "fmsoption/fms_option.h"
+#include "fmsoption/fms_variate.h"
 
 namespace xll {
 

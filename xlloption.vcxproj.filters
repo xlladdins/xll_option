@@ -24,14 +24,13 @@
     <ClCompile Include="xll_variate_normal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="xll_variate_discrete.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="xll_option.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="setup.bat" />
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>
