@@ -1,10 +1,12 @@
 // xll_variate_normal.cpp - Excel add-in for normal variate
 #include "xll/xll/xll.h"
-#include "../../keithalewis/fmsoption/fms_variate_normal.h"
-#include "../../keithalewis/fmsoption/fms_variate.h"
+#include "fmsoption/fms_variate_normal.h"
+#include "fmsoption/fms_variate.h"
 
 using namespace fms;
 using namespace xll;
+
+// int breakme = [&]() { return _crtBreakAlloc = 620; }();
 
 AddIn xai_variate_normal(
 	Function(XLL_HANDLE, "xll_variate_normal", "VARIATE.NORMAL")
