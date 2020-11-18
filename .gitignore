@@ -6,3 +6,5 @@
 /Debug
 /packages/gsl-msvc-x64.2.4.0.8788
 /x64/Debug
+/.vs
+/packages/gsl-msvc-x86.2.4.0.8788

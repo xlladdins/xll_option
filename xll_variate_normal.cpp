@@ -6,6 +6,8 @@
 using namespace fms;
 using namespace xll;
 
+// int breakme = [&]() { return _crtBreakAlloc = 620; }();
+
 AddIn xai_variate_normal(
 	Function(XLL_HANDLE, "xll_variate_normal", "VARIATE.NORMAL")
 	.Args({
