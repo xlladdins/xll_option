@@ -19,12 +19,14 @@ AddIn xai_variate_discrete(
 HANDLEX WINAPI xll_variate_discrete(const _FPX* px, const _FPX* pp)
 {
 #pragma XLLEXPORT
-	handlex h;
+	HANDLEX h = INVALID_HANDLEX;
 
 	try {
 		ensure(size(*px) == size(*pp));
-		auto md = variate::discrete(size(*px), px->array, pp->array);
-		//handle<variate_base<>> m(new variate_model(variate::discrete(size(*px), px->array, pp->array)));
+		handle<variate_base<>> m(new variate_model(variate::discrete(size(*px), px->array, pp->array)));
+		if (m) {
+			h = m.get();
+		}
 	}
 	catch (const std::exception& ex) {
 		XLL_ERROR(ex.what());
