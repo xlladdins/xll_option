@@ -11,7 +11,7 @@ static AddIn xai_variate_cdf(
 		Arg(XLL_HANDLEX, "m", "is a handle to the variate"),
 		Arg(XLL_DOUBLE, "x", "is the value"),
 		Arg(XLL_DOUBLE, "s", "is the Esscher transform parameter. Default is 0."),
-		Arg(XLL_WORD, "n", "is the derivaive. Default is 0.")
+		Arg(XLL_WORD, "n", "is the derivative. Default is 0.")
 		}
 	)
 	.FunctionHelp("Return s transformed n-th derivative of the cumulative distribution function at x.")

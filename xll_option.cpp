@@ -1,5 +1,4 @@
 // xll_option.cpp - Option value and greeks parameterized by model.
-#include <cmath>
 //Uncomment to build for versions of Excel prior to 2007
 //#define XLOPERX XLOPER
 #include "xll_option.h"
@@ -14,7 +13,7 @@ AddIn xai_option_value(
 	.Args({
 		Arg(XLL_HANDLE, "m", "is a handle to a model."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
-		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
 	})
 	.FunctionHelp("Return the option value.")
@@ -24,7 +23,7 @@ AddIn xai_option_value(
 double WINAPI xll_option_value(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option(m, &model::value, f, s, k);
+	return xll_option(m, &option<variate_base<>>::value, f, s, k);
 }
 
 AddIn xai_option_delta(
