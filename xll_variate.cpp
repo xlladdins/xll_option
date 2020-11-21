@@ -14,8 +14,8 @@ static AddIn xai_variate_cdf(
 		Arg(XLL_WORD, "n", "is the derivaive. Default is 0.")
 		}
 	)
-	.FunctionHelp("Return s transformed n-th derivative of the cumulative distribution function at x.")
-	.Category("XLL")
+	.FunctionHelp("Return the n-th derivative of the transformed cumulative distribution function at x.")
+	.Category("Variate")
 );
 double WINAPI xll_variate_cdf(HANDLEX m, double x, double s, WORD n)
 {
@@ -32,13 +32,13 @@ double WINAPI xll_variate_cdf(HANDLEX m, double x, double s, WORD n)
 static AddIn xai_variate_pdf(
 	Function(XLL_DOUBLE, "xll_variate_pdf", "VARIATE.PDF")
 	.Args({
-		Arg(XLL_HANDLEX, "m", "is a handle to the variate"),
-		Arg(XLL_DOUBLE, "x", "is the value"),
+		Arg(XLL_HANDLEX, "m", "is a handle to the variate."),
+		Arg(XLL_DOUBLE, "x", "is the value."),
 		Arg(XLL_DOUBLE, "s", "is the Esscher transform parameter. Default is 0."),
 		}
 	)
 	.FunctionHelp("Return s transformed probability density at x.")
-	.Category("XLL")
+	.Category("Variate")
 );
 double WINAPI xll_variate_pdf(HANDLEX m, double x, double s)
 {
@@ -55,13 +55,12 @@ double WINAPI xll_variate_pdf(HANDLEX m, double x, double s)
 static AddIn xai_variate_cumulant(
 	Function(XLL_DOUBLE, "xll_variate_cumulant", "VARIATE.CUMULANT")
 	.Args({
-		Arg(XLL_HANDLEX, "m", "is a handle to the variate"),
-		Arg(XLL_DOUBLE, "s", "is the value"),
-		Arg(XLL_WORD, "n", "is the derivaive")
+		Arg(XLL_HANDLEX, "m", "is a handle to the variate."),
+		Arg(XLL_DOUBLE, "s", "is the value."),
 		}
 	)
 	.FunctionHelp("Return n-th derivative of cumulant at s.")
-	.Category("XLL")
+	.Category("Variate")
 );
 double WINAPI xll_variate_cumulant(HANDLEX m, double x, WORD n)
 {
