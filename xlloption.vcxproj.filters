@@ -29,8 +29,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="xll_option.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <None Include="packages.config" />
+    <None Include="setup.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

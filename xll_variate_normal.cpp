@@ -13,10 +13,10 @@ AddIn xai_variate_normal(
 	.Args({
 		Arg(XLL_DOUBLE, "mu", "is the mean. Default is 0."),
 		Arg(XLL_DOUBLE, "sigma", "is the standard deviation. Default is 1.")
-		})
-	.Category("Option")
-	.FunctionHelp("Return handle to normal variate.")
+	})
 	.Uncalced()
+	.FunctionHelp("Return handle to normal variate.")
+	.Category("Option")
 );
 HANDLEX WINAPI xll_variate_normal(double mu, double sigma)
 {

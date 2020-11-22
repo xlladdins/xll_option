@@ -185,9 +185,6 @@
       <Project>{367249bb-b8a3-4671-b095-a5db904dbd6d}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="xll_option.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\gsl-msvc-x64.2.4.0.8788\build\native\gsl-msvc-x64.targets" Condition="Exists('packages\gsl-msvc-x64.2.4.0.8788\build\native\gsl-msvc-x64.targets')" />

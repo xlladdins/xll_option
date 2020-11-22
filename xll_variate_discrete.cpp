@@ -11,27 +11,26 @@ AddIn xai_variate_discrete(
 	.Args({
 		Arg(XLL_FP, "x", "are the values of the discrete random variable."),
 		Arg(XLL_FP, "p", "are the probabilities of the values")
-		})
-	.Category("Option")
-	.FunctionHelp("Return handle to the discrete variate.")
+	})
 	.Uncalced()
+	.FunctionHelp("Return handle to the discrete variate.")
+	.Category("Variate")
 );
 HANDLEX WINAPI xll_variate_discrete(const _FPX* px, const _FPX* pp)
 {
 #pragma XLLEXPORT
-	HANDLEX h = INVALID_HANDLEX;
-
 	try {
 		ensure(size(*px) == size(*pp));
 		handle<variate_base<>> m(new variate_model(variate::discrete(size(*px), px->array, pp->array)));
+
 		if (m) {
-			h = m.get();
+			return m.get();
 		}
 	}
 	catch (const std::exception& ex) {
 		XLL_ERROR(ex.what());
 	}
 
-	return h;
+	return INVALID_HANDLEX;
 }
 
