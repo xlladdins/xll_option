@@ -8,6 +8,39 @@
 using namespace fms;
 using namespace xll;
 
+AddIn xai_option_value(
+	Function(XLL_DOUBLE, "xll_option_value", "OPTION.VALUE")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the vol."),
+		Arg(XLL_DOUBLE, "k", "is the strike."),
+	})
+	.FunctionHelp("Return the call (k > 0) or put (k < 0) option value.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_value(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			return o.value(f, s, k);
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return std::numeric_limits<double>::quiet_NaN();
+}
 AddIn xai_option_call_value(
 	Function(XLL_DOUBLE, "xll_option_call_value", "OPTION.CALL.VALUE")
 	.Args({
@@ -36,12 +69,11 @@ double WINAPI xll_option_call_value(HANDLEX m, double f, double s, double k)
 		XLL_ERROR(ex.what());
 	}
 	catch (...) {
-		XLL_ERROR("xll_option: unknown exception");
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
 }
-
 AddIn xai_option_put_value(
 	Function(XLL_DOUBLE, "xll_option_put_value", "OPTION.PUT.VALUE")
 	.Args({
@@ -50,16 +82,98 @@ AddIn xai_option_put_value(
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
 	})
-	.FunctionHelp("Return the option value.")
+	.FunctionHelp("Return the put option value.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
 double WINAPI xll_option_put_value(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	return xll_option(m, &model::value, f, s, k);
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			return o.value(f, s, payoff::put(k));
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return std::numeric_limits<double>::quiet_NaN();
 }
 
+AddIn xai_option_delta(
+	Function(XLL_DOUBLE, "xll_option_delta", "OPTION.DELTA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the call (k > 0) or put (k < 0) option delta.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_delta(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			return o.delta(f, s, k);
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return std::numeric_limits<double>::quiet_NaN();
+}
+AddIn xai_option_call_delta(
+	Function(XLL_DOUBLE, "xll_option_call_delta", "OPTION.CALL.DELTA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the call option delta.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_call_delta(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			return o.delta(f, s, payoff::call(k));
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return std::numeric_limits<double>::quiet_NaN();
+}
 AddIn xai_option_put_delta(
 	Function(XLL_DOUBLE, "xll_option_put_delta", "OPTION.PUT.DELTA")
 	.Args({
@@ -88,7 +202,7 @@ double WINAPI xll_option_put_delta(HANDLEX m, double f, double s, double k)
 		XLL_ERROR(ex.what());
 	}
 	catch (...) {
-		XLL_ERROR("xll_option: unknown exception");
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
@@ -122,7 +236,7 @@ double WINAPI xll_option_gamma(HANDLEX m, double f, double s, double k)
 		XLL_ERROR(ex.what());
 	}
 	catch (...) {
-		XLL_ERROR("xll_option: unknown exception");
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
@@ -156,12 +270,11 @@ double WINAPI xll_option_vega(HANDLEX m, double f, double s, double k)
 		XLL_ERROR(ex.what());
 	}
 	catch (...) {
-		XLL_ERROR("xll_option: unknown exception");
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
 }
-
 
 AddIn xai_option_implied(
 	Function(XLL_DOUBLE, "xll_option_implied", "OPTION.IMPLIED")
@@ -170,7 +283,7 @@ AddIn xai_option_implied(
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "v", "is the option value."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
-		Arg(XLL_DOUBLE, "s0", "is the initial vol guess. Default is 0.1"),		
+		Arg(XLL_DOUBLE, "s", "is the initial vol guess. Default is 0.1"),		
 		Arg(XLL_WORD,   "n", "is the maximum number of iterations. Default is 10."),
 		Arg(XLL_DOUBLE, "eps", "is value precision. Default is sqrt of machine epsilon."),
 	})
@@ -178,7 +291,7 @@ AddIn xai_option_implied(
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
-double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double s0, WORD n, double eps)
+double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double s, WORD n, double eps)
 {
 #pragma XLLEXPORT
 	try {
@@ -187,14 +300,14 @@ double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double
 		if (m_) {
 			option o(*m_.ptr());
 
-			return o.implied(f, v, k, s0, n, eps);
+			return o.implied(f, v, k, s, n, eps);
 		}
 	}
 	catch (const std::exception& ex) {
 		XLL_ERROR(ex.what());
 	}
 	catch (...) {
-		XLL_ERROR("xll_option: unknown exception");
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
