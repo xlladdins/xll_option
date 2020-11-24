@@ -300,7 +300,7 @@ double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double
 		if (m_) {
 			option o(*m_.ptr());
 
-			return o.implied(f, v, k, s, n, eps);
+			return o.implied(f, v, std::abs(k), s, n, eps);
 		}
 	}
 	catch (const std::exception& ex) {
