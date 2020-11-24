@@ -174,16 +174,29 @@
     <ClCompile Include="xll_option.cpp" />
     <ClCompile Include="xll_variate.cpp" />
     <ClCompile Include="xll_variate_discrete.cpp" />
+    <ClCompile Include="xll_variate_logistic.cpp" />
     <ClCompile Include="xll_variate_normal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="setup.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="fmsoption\fmsoption.vcxproj">
+      <Project>{2d565a3e-1220-47df-8791-b4387195c20a}</Project>
+    </ProjectReference>
     <ProjectReference Include="xll\xll.vcxproj">
       <Project>{367249bb-b8a3-4671-b095-a5db904dbd6d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\gsl-msvc-x64.2.4.0.8788\build\native\gsl-msvc-x64.targets" Condition="Exists('packages\gsl-msvc-x64.2.4.0.8788\build\native\gsl-msvc-x64.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\gsl-msvc-x64.2.4.0.8788\build\native\gsl-msvc-x64.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\gsl-msvc-x64.2.4.0.8788\build\native\gsl-msvc-x64.targets'))" />
+  </Target>
 </Project>

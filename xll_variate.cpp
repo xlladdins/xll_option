@@ -12,8 +12,7 @@ static AddIn xai_variate_cdf(
 		Arg(XLL_DOUBLE, "x", "is the value"),
 		Arg(XLL_DOUBLE, "s", "is the Esscher transform parameter. Default is 0."),
 		Arg(XLL_WORD, "n", "is the derivative. Default is 0.")
-		}
-	)
+	})
 	.FunctionHelp("Return the n-th derivative of the transformed cumulative distribution function at x.")
 	.Category("Variate")
 );
@@ -22,8 +21,13 @@ double WINAPI xll_variate_cdf(HANDLEX m, double x, double s, WORD n)
 #pragma XLLEXPORT
 	handle<variate_base<>> m_(m);
 
-	if (m_) {
-		return m_->cdf(x, s, n);
+	try {
+		if (m_) {
+			return m_->cdf(x, s, n);
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
@@ -35,8 +39,7 @@ static AddIn xai_variate_pdf(
 		Arg(XLL_HANDLEX, "m", "is a handle to the variate."),
 		Arg(XLL_DOUBLE, "x", "is the value."),
 		Arg(XLL_DOUBLE, "s", "is the Esscher transform parameter. Default is 0."),
-		}
-	)
+	})
 	.FunctionHelp("Return s transformed probability density at x.")
 	.Category("Variate")
 );
@@ -45,8 +48,13 @@ double WINAPI xll_variate_pdf(HANDLEX m, double x, double s)
 #pragma XLLEXPORT
 	handle<variate_base<>> m_(m);
 
-	if (m_) {
-		return m_->cdf(x, s, 1);
+	try {
+		if (m_) {
+			return m_->cdf(x, s, 1);
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
@@ -57,18 +65,23 @@ static AddIn xai_variate_cumulant(
 	.Args({
 		Arg(XLL_HANDLEX, "m", "is a handle to the variate."),
 		Arg(XLL_DOUBLE, "s", "is the value."),
-		}
-	)
+		Arg(XLL_WORD, "n", "is the derivative. Default is 0.")
+	})
 	.FunctionHelp("Return n-th derivative of cumulant at s.")
 	.Category("Variate")
 );
-double WINAPI xll_variate_cumulant(HANDLEX m, double x, WORD n)
+double WINAPI xll_variate_cumulant(HANDLEX m, double s, WORD n)
 {
 #pragma XLLEXPORT
 	handle<variate_base<>> m_(m);
 
-	if (m_) {
-		return m_->cumulant(x, n);
+	try {
+		if (m_) {
+			return m_->cumulant(s, n);
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
