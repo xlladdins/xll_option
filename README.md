@@ -8,4 +8,5 @@ Replace `normal` by the name for your model using [`xll_variate_normal.cpp`](htt
 
 The handle returned by this can be used to calculate the value and greeks of put or call options.
 For example, the Excel function `=OPTION.PUT.DELTA(h, f, s, k)` returns the (forward) delta of
-a put option having forward `f`, vol `s`, and strike `k` given a handle `h` for any model.
+a put option where `f` and `s` are the forward and vol of the underlying and `k` is the put strike. 
+Any model handle `h` can be used for the first argument.
