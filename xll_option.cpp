@@ -2,7 +2,7 @@
 //Uncomment to build for versions of Excel prior to 2007
 //#define XLOPERX XLOPER
 #include "fmsoption/fms_option.h"
-#include "fmsoption/fms_variate.h"
+#include "fmsoption/fms_variate_handle.h"
 #include "xll/xll/xll.h"
 
 using namespace fms;

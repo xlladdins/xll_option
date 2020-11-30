@@ -1,7 +1,7 @@
 // xll_variate_logistic.cpp - Excel add-in for logistic variates
 #include "xll/xll/xll.h"
 #include "fmsoption/fms_variate_logistic.h"
-#include "fmsoption/fms_variate.h"
+#include "fmsoption/fms_variate_handle.h"
 
 using namespace fms;
 using namespace xll;
@@ -19,7 +19,7 @@ AddIn xai_variate_logistic(
 HANDLEX WINAPI xll_variate_logistic()
 {
 #pragma XLLEXPORT
-	handle<variate_base<>> m(new variate_model(variate::logistic()));
+	handle<variate_base<>> m(new variate_handle(variate::logistic()));
 
 	return m.get();
 }

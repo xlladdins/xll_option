@@ -1,7 +1,7 @@
 // xll_variate_normal.cpp - Excel add-in for normal variates
 #include "xll/xll/xll.h"
 #include "fmsoption/fms_variate_normal.h"
-#include "fmsoption/fms_variate.h"
+#include "fmsoption/fms_variate_handle.h"
 
 using namespace fms;
 using namespace xll;
@@ -21,7 +21,7 @@ AddIn xai_variate_normal(
 HANDLEX WINAPI xll_variate_normal(double mu, double sigma)
 {
 #pragma XLLEXPORT
-	handle<variate_base<>> m(new variate_model(variate::normal(mu, sigma)));
+	handle<variate_base<>> m(new variate_handle(variate::normal<>(mu, sigma)));
 
 	return m.get();
 }

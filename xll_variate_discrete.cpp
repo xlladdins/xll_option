@@ -1,7 +1,7 @@
 // xll_variate_discrete.cpp - Excel add-in for discrete variates
 #include "xll/xll/xll.h"
 #include "fmsoption/fms_variate_discrete.h"
-#include "fmsoption/fms_variate.h"
+#include "fmsoption/fms_variate_handle.h"
 
 using namespace fms;
 using namespace xll;
@@ -21,7 +21,7 @@ HANDLEX WINAPI xll_variate_discrete(const _FPX* px, const _FPX* pp)
 #pragma XLLEXPORT
 	try {
 		ensure(size(*px) == size(*pp));
-		handle<variate_base<>> m(new variate_model(variate::discrete(size(*px), px->array, pp->array)));
+		handle<variate_base<>> m(new variate_handle(variate::discrete(size(*px), px->array, pp->array)));
 
 		if (m) {
 			return m.get();

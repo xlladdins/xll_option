@@ -1,6 +1,6 @@
 // xll_variate.cpp - random variates
 #include "xll/xll/xll.h"
-#include "fmsoption/fms_variate.h"
+#include "fmsoption/fms_variate_handle.h"
 
 using namespace fms;
 using namespace xll;
