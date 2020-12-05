@@ -56,23 +56,7 @@ AddIn xai_option_call_value(
 double WINAPI xll_option_call_value(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	try {
-		handle<variate_base<>> m_(m);
-
-		if (m_) {
-			option o(*m_.ptr());
-
-			return o.value(f, s, payoff::call(k));
-		}
-	}
-	catch (const std::exception& ex) {
-		XLL_ERROR(ex.what());
-	}
-	catch (...) {
-		XLL_ERROR(__FUNCTION__ ": unknown exception");
-	}
-
-	return std::numeric_limits<double>::quiet_NaN();
+	return xll_option_value(m, f, s, k);
 }
 AddIn xai_option_put_value(
 	Function(XLL_DOUBLE, "xll_option_put_value", "OPTION.PUT.VALUE")
@@ -89,23 +73,7 @@ AddIn xai_option_put_value(
 double WINAPI xll_option_put_value(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	try {
-		handle<variate_base<>> m_(m);
-
-		if (m_) {
-			option o(*m_.ptr());
-
-			return o.value(f, s, payoff::put(k));
-		}
-	}
-	catch (const std::exception& ex) {
-		XLL_ERROR(ex.what());
-	}
-	catch (...) {
-		XLL_ERROR(__FUNCTION__ ": unknown exception");
-	}
-
-	return std::numeric_limits<double>::quiet_NaN();
+	return xll_option_value(m, f, s, -k);
 }
 
 AddIn xai_option_delta(
@@ -156,23 +124,7 @@ AddIn xai_option_call_delta(
 double WINAPI xll_option_call_delta(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	try {
-		handle<variate_base<>> m_(m);
-
-		if (m_) {
-			option o(*m_.ptr());
-
-			return o.delta(f, s, payoff::call(k));
-		}
-	}
-	catch (const std::exception& ex) {
-		XLL_ERROR(ex.what());
-	}
-	catch (...) {
-		XLL_ERROR(__FUNCTION__ ": unknown exception");
-	}
-
-	return std::numeric_limits<double>::quiet_NaN();
+	return xll_option_delta(m, f, s, k);
 }
 AddIn xai_option_put_delta(
 	Function(XLL_DOUBLE, "xll_option_put_delta", "OPTION.PUT.DELTA")
@@ -189,23 +141,7 @@ AddIn xai_option_put_delta(
 double WINAPI xll_option_put_delta(HANDLEX m, double f, double s, double k)
 {
 #pragma XLLEXPORT
-	try {
-		handle<variate_base<>> m_(m);
-
-		if (m_) {
-			option o(*m_.ptr());
-
-			return o.delta(f, s, payoff::put(k));
-		}
-	}
-	catch (const std::exception& ex) {
-		XLL_ERROR(ex.what());
-	}
-	catch (...) {
-		XLL_ERROR(__FUNCTION__ ": unknown exception");
-	}
-
-	return std::numeric_limits<double>::quiet_NaN();
+	return xll_option_delta(m, f, s, -k);
 }
 
 AddIn xai_option_gamma(
@@ -311,4 +247,297 @@ double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double
 	}
 
 	return std::numeric_limits<double>::quiet_NaN();
+}
+
+AddIn xai_option_digital_value(
+	Function(XLL_DOUBLE, "xll_option_digital_value", "OPTION.DIGITAL.VALUE")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the vol."),
+		Arg(XLL_DOUBLE, "k", "is the strike."),
+		})
+		.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option value.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_value(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			if (k >= 0) {
+				return o.value(f, s, payoff::digital_call(k));
+			}
+			else {
+				return o.value(f, s, payoff::digital_put(-k));
+			}
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return std::numeric_limits<double>::quiet_NaN();
+}
+
+AddIn xai_option_digital_call_value(
+	Function(XLL_DOUBLE, "xll_option_digital_call_value", "OPTION.DIGITAL_CALL.VALUE")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the digital call strike."),
+		})
+		.FunctionHelp("Return the digital call option value.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_call_value(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	return xll_option_digital_value(m, f, s, k);
+}
+AddIn xai_option_digital_put_value(
+	Function(XLL_DOUBLE, "xll_option_digital_put_value", "OPTION.DIGITAL_PUT.VALUE")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the vol."),
+		Arg(XLL_DOUBLE, "k", "is the strike."),
+		})
+		.FunctionHelp("Return the digital put option value.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_put_value(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	return xll_option_digital_value(m, f, s, -k);
+}
+
+AddIn xai_option_digital_delta(
+	Function(XLL_DOUBLE, "xll_option_digital_delta", "OPTION.DIGITAL.DELTA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option delta.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_delta(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			if (k >= 0) {
+				return o.delta(f, s, payoff::digital_call(k));
+			}
+			else {
+				return o.delta(f, s, payoff::digital_put(-k));
+			}
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return std::numeric_limits<double>::quiet_NaN();
+}
+AddIn xai_option_digital_call_delta(
+	Function(XLL_DOUBLE, "xll_option_digital_call_delta", "OPTION.DIGITAL_CALL.DELTA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the digital call option delta.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_call_delta(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	return xll_option_digital_delta(m, f, s, k);
+}
+AddIn xai_option_digital_put_delta(
+	Function(XLL_DOUBLE, "xll_option_digital_put_delta", "OPTION.DIGITAL_PUT.DELTA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the digital put strike."),
+		})
+		.FunctionHelp("Return the digital put option delta.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_put_delta(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	return xll_option_digital_delta(m, f, s, -k);
+}
+
+AddIn xai_option_digital_gamma(
+	Function(XLL_DOUBLE, "xll_option_digital_gamma", "OPTION.DIGITAL.GAMMA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option gamma.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_gamma(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			if (k >= 0) {
+				return o.gamma(f, s, payoff::digital_call(k));
+			}
+			else {
+				return o.gamma(f, s, payoff::digital_put(-k));
+			}
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return std::numeric_limits<double>::quiet_NaN();
+}
+AddIn xai_option_digital_call_gamma(
+	Function(XLL_DOUBLE, "xll_option_digital_call_gamma", "OPTION.DIGITAL_CALL.GAMMA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the digital call option gamma.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_call_gamma(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	return xll_option_digital_gamma(m, f, s, k);
+}
+AddIn xai_option_digital_put_gamma(
+	Function(XLL_DOUBLE, "xll_option_digital_put_gamma", "OPTION.DIGITAL_PUT.GAMMA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the digital put option gamma.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_put_gamma(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	return xll_option_digital_gamma(m, f, s, -k);
+}
+
+AddIn xai_option_digital_vega(
+	Function(XLL_DOUBLE, "xll_option_digital_vega", "OPTION.DIGITAL.VEGA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option vega.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_vega(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			if (k >= 0) {
+				return o.vega(f, s, payoff::digital_call(k));
+			}
+			else {
+				return o.vega(f, s, payoff::digital_put(-k));
+			}
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return std::numeric_limits<double>::quiet_NaN();
+}
+AddIn xai_option_digital_call_vega(
+	Function(XLL_DOUBLE, "xll_option_digital_call_vega", "OPTION.DIGITAL_CALL.VEGA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the digital call option vega.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_call_vega(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	return xll_option_digital_vega(m, f, s, k);
+}
+AddIn xai_option_digital_put_vega(
+	Function(XLL_DOUBLE, "xll_option_digital_put_vega", "OPTION.DIGITAL_PUT.VEGA")
+	.Args({
+		Arg(XLL_HANDLEX, "m", "is a handle to a variate."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the volatility."),
+		Arg(XLL_DOUBLE, "k", "is the put strike."),
+		})
+		.FunctionHelp("Return the digital put option vega.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_digital_put_vega(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	return xll_option_digital_vega(m, f, s, -k);
 }
