@@ -8,7 +8,7 @@ using namespace xll;
 static AddIn xai_variate_cdf(
 	Function(XLL_DOUBLE, "xll_variate_cdf", "VARIATE.CDF")
 	.Args({
-		Arg(XLL_HANDLEX, "m", "is a handle to the variate"),
+		Arg(XLL_HANDLE, "m", "is a handle to the variate"),
 		Arg(XLL_DOUBLE, "x", "is the value"),
 		Arg(XLL_DOUBLE, "s", "is the Esscher transform parameter. Default is 0."),
 		Arg(XLL_WORD, "n", "is the derivative. Default is 0.")
@@ -34,13 +34,13 @@ double WINAPI xll_variate_cdf(HANDLEX m, double x, double s, WORD n)
 		XLL_ERROR(ex.what());
 	}
 
-	return std::numeric_limits<double>::quiet_NaN();
+	return XLL_NAN;
 }
 
 static AddIn xai_variate_pdf(
 	Function(XLL_DOUBLE, "xll_variate_pdf", "VARIATE.PDF")
 	.Args({
-		Arg(XLL_HANDLEX, "m", "is a handle to the variate."),
+		Arg(XLL_HANDLE, "m", "is a handle to the variate."),
 		Arg(XLL_DOUBLE, "x", "is the value."),
 		Arg(XLL_DOUBLE, "s", "is the Esscher transform parameter. Default is 0."),
 	})
@@ -61,13 +61,13 @@ double WINAPI xll_variate_pdf(HANDLEX m, double x, double s)
 		XLL_ERROR(ex.what());
 	}
 
-	return std::numeric_limits<double>::quiet_NaN();
+	return XLL_NAN;
 }
 
 static AddIn xai_variate_cumulant(
 	Function(XLL_DOUBLE, "xll_variate_cumulant", "VARIATE.CUMULANT")
 	.Args({
-		Arg(XLL_HANDLEX, "m", "is a handle to the variate."),
+		Arg(XLL_HANDLE, "m", "is a handle to the variate."),
 		Arg(XLL_DOUBLE, "s", "is the value."),
 		Arg(XLL_WORD, "n", "is the derivative. Default is 0.")
 	})
@@ -92,5 +92,5 @@ double WINAPI xll_variate_cumulant(HANDLEX m, double s, WORD n)
 		XLL_ERROR(ex.what());
 	}
 
-	return std::numeric_limits<double>::quiet_NaN();
+	return XLL_NAN;
 }
