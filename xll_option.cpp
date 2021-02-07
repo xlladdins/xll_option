@@ -1,16 +1,15 @@
 // xll_option.cpp - Option value and greeks parameterized by model.
 //Uncomment to build for versions of Excel prior to 2007
 //#define XLOPERX XLOPER
-#include "fmsoption/fms_option.h"
-#include "fmsoption/fms_variate_handle.h"
-#include "xll/xll/xll.h"
+#include "fms_option/fms_option.h"
+#include "xll_option.h"
 
 using namespace fms;
 using namespace xll;
 
 AddIn xai_option_value(
 	Function(XLL_DOUBLE, "xll_option_value", "OPTION.VALUE")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
@@ -43,7 +42,7 @@ double WINAPI xll_option_value(HANDLEX m, double f, double s, double k)
 }
 AddIn xai_option_call_value(
 	Function(XLL_DOUBLE, "xll_option_call_value", "OPTION.CALL.VALUE")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
@@ -60,7 +59,7 @@ double WINAPI xll_option_call_value(HANDLEX m, double f, double s, double k)
 }
 AddIn xai_option_put_value(
 	Function(XLL_DOUBLE, "xll_option_put_value", "OPTION.PUT.VALUE")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
@@ -78,13 +77,13 @@ double WINAPI xll_option_put_value(HANDLEX m, double f, double s, double k)
 
 AddIn xai_option_delta(
 	Function(XLL_DOUBLE, "xll_option_delta", "OPTION.DELTA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the call (k > 0) or put (k < 0) option delta.")
+	.FunctionHelp("Return the call (k > 0) or put (k < 0) option delta.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -111,13 +110,13 @@ double WINAPI xll_option_delta(HANDLEX m, double f, double s, double k)
 }
 AddIn xai_option_call_delta(
 	Function(XLL_DOUBLE, "xll_option_call_delta", "OPTION.CALL.DELTA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the call option delta.")
+	.FunctionHelp("Return the call option delta.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -128,13 +127,13 @@ double WINAPI xll_option_call_delta(HANDLEX m, double f, double s, double k)
 }
 AddIn xai_option_put_delta(
 	Function(XLL_DOUBLE, "xll_option_put_delta", "OPTION.PUT.DELTA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the put option delta.")
+	.FunctionHelp("Return the put option delta.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -146,13 +145,13 @@ double WINAPI xll_option_put_delta(HANDLEX m, double f, double s, double k)
 
 AddIn xai_option_gamma(
 	Function(XLL_DOUBLE, "xll_option_gamma", "OPTION.GAMMA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the option gamma.")
+	.FunctionHelp("Return the option gamma.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -180,13 +179,13 @@ double WINAPI xll_option_gamma(HANDLEX m, double f, double s, double k)
 
 AddIn xai_option_vega(
 	Function(XLL_DOUBLE, "xll_option_vega", "OPTION.VEGA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the option vega.")
+	.FunctionHelp("Return the option vega.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -214,7 +213,7 @@ double WINAPI xll_option_vega(HANDLEX m, double f, double s, double k)
 
 AddIn xai_option_implied(
 	Function(XLL_DOUBLE, "xll_option_implied", "OPTION.IMPLIED")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a model."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "v", "is the option value."),
@@ -251,13 +250,13 @@ double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double
 
 AddIn xai_option_digital_value(
 	Function(XLL_DOUBLE, "xll_option_digital_value", "OPTION.DIGITAL.VALUE")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
 		})
-		.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option value.")
+	.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option value.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -290,13 +289,13 @@ double WINAPI xll_option_digital_value(HANDLEX m, double f, double s, double k)
 
 AddIn xai_option_digital_call_value(
 	Function(XLL_DOUBLE, "xll_option_digital_call_value", "OPTION.DIGITAL_CALL.VALUE")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the digital call strike."),
 		})
-		.FunctionHelp("Return the digital call option value.")
+	.FunctionHelp("Return the digital call option value.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -307,13 +306,13 @@ double WINAPI xll_option_digital_call_value(HANDLEX m, double f, double s, doubl
 }
 AddIn xai_option_digital_put_value(
 	Function(XLL_DOUBLE, "xll_option_digital_put_value", "OPTION.DIGITAL_PUT.VALUE")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the strike."),
 		})
-		.FunctionHelp("Return the digital put option value.")
+	.FunctionHelp("Return the digital put option value.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -325,13 +324,13 @@ double WINAPI xll_option_digital_put_value(HANDLEX m, double f, double s, double
 
 AddIn xai_option_digital_delta(
 	Function(XLL_DOUBLE, "xll_option_digital_delta", "OPTION.DIGITAL.DELTA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option delta.")
+	.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option delta.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -363,13 +362,13 @@ double WINAPI xll_option_digital_delta(HANDLEX m, double f, double s, double k)
 }
 AddIn xai_option_digital_call_delta(
 	Function(XLL_DOUBLE, "xll_option_digital_call_delta", "OPTION.DIGITAL_CALL.DELTA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the digital call option delta.")
+	.FunctionHelp("Return the digital call option delta.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -380,13 +379,13 @@ double WINAPI xll_option_digital_call_delta(HANDLEX m, double f, double s, doubl
 }
 AddIn xai_option_digital_put_delta(
 	Function(XLL_DOUBLE, "xll_option_digital_put_delta", "OPTION.DIGITAL_PUT.DELTA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the digital put strike."),
 		})
-		.FunctionHelp("Return the digital put option delta.")
+	.FunctionHelp("Return the digital put option delta.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -398,13 +397,13 @@ double WINAPI xll_option_digital_put_delta(HANDLEX m, double f, double s, double
 
 AddIn xai_option_digital_gamma(
 	Function(XLL_DOUBLE, "xll_option_digital_gamma", "OPTION.DIGITAL.GAMMA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option gamma.")
+	.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option gamma.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -436,13 +435,13 @@ double WINAPI xll_option_digital_gamma(HANDLEX m, double f, double s, double k)
 }
 AddIn xai_option_digital_call_gamma(
 	Function(XLL_DOUBLE, "xll_option_digital_call_gamma", "OPTION.DIGITAL_CALL.GAMMA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the digital call option gamma.")
+	.FunctionHelp("Return the digital call option gamma.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -453,13 +452,13 @@ double WINAPI xll_option_digital_call_gamma(HANDLEX m, double f, double s, doubl
 }
 AddIn xai_option_digital_put_gamma(
 	Function(XLL_DOUBLE, "xll_option_digital_put_gamma", "OPTION.DIGITAL_PUT.GAMMA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the digital put option gamma.")
+	.FunctionHelp("Return the digital put option gamma.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -471,13 +470,13 @@ double WINAPI xll_option_digital_put_gamma(HANDLEX m, double f, double s, double
 
 AddIn xai_option_digital_vega(
 	Function(XLL_DOUBLE, "xll_option_digital_vega", "OPTION.DIGITAL.VEGA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option vega.")
+	.FunctionHelp("Return the digital call (k > 0) or put (k < 0) option vega.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
@@ -509,7 +508,7 @@ double WINAPI xll_option_digital_vega(HANDLEX m, double f, double s, double k)
 }
 AddIn xai_option_digital_call_vega(
 	Function(XLL_DOUBLE, "xll_option_digital_call_vega", "OPTION.DIGITAL_CALL.VEGA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
@@ -526,13 +525,13 @@ double WINAPI xll_option_digital_call_vega(HANDLEX m, double f, double s, double
 }
 AddIn xai_option_digital_put_vega(
 	Function(XLL_DOUBLE, "xll_option_digital_put_vega", "OPTION.DIGITAL_PUT.VEGA")
-	.Args({
+	.Arguments({
 		Arg(XLL_HANDLE, "m", "is a handle to a variate."),
 		Arg(XLL_DOUBLE, "f", "is the forward."),
 		Arg(XLL_DOUBLE, "s", "is the vol."),
 		Arg(XLL_DOUBLE, "k", "is the put strike."),
 		})
-		.FunctionHelp("Return the digital put option vega.")
+	.FunctionHelp("Return the digital put option vega.")
 	.Category("Option")
 	.HelpTopic("https://keithalewis.github.io/math/op.html")
 );
