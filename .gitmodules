@@ -1,6 +1,3 @@
-[submodule "xll"]
-	path = xll
-	url = https://github.com/xlladdins/xll.git
 [submodule "fms_option"]
 	path = fms_option
 	url = https://github.com/keithalewis/fms_option.git

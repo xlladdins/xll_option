@@ -1,7 +1,9 @@
 // xll_option.h
 #pragma once
+#include "fms_option/fms_option.h"
 #include "fms_variate/fms_variate.h"
-#include "xll/xll/xll.h"
+//#define XLL_VERSION 4
+#include "xll_variate/xll/xll/xll.h"
 
 namespace fms {
 

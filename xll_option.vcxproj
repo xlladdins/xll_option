@@ -184,7 +184,7 @@
     <ProjectReference Include="fms_option\fmsoption.vcxproj">
       <Project>{2d565a3e-1220-47df-8791-b4387195c20a}</Project>
     </ProjectReference>
-    <ProjectReference Include="xll\xll.vcxproj">
+    <ProjectReference Include="xll_variate\xll\xll.vcxproj">
       <Project>{367249bb-b8a3-4671-b095-a5db904dbd6d}</Project>
     </ProjectReference>
   </ItemGroup>

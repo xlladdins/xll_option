@@ -1,7 +1,5 @@
 // xll_option.cpp - Option value and greeks parameterized by model.
 //Uncomment to build for versions of Excel prior to 2007
-//#define XLOPERX XLOPER
-#include "fms_option/fms_option.h"
 #include "xll_option.h"
 
 using namespace fms;
