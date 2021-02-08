@@ -5,6 +5,41 @@
 using namespace fms;
 using namespace xll;
 
+AddIn xai_option_moneyness(
+	Function(XLL_DOUBLE, "xll_option_moneyness", "OPTION.MONEYNESS")
+	.Arguments({
+		Arg(XLL_HANDLE, "m", "is a handle to a model."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "s", "is the vol."),
+		Arg(XLL_DOUBLE, "k", "is the strike."),
+		})
+		.FunctionHelp("Return the option moneyness.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_moneyness(HANDLEX m, double f, double s, double k)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			return o.moneyness(f, s, k);
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return XLL_NAN;
+}
+
+
 AddIn xai_option_value(
 	Function(XLL_DOUBLE, "xll_option_value", "OPTION.VALUE")
 	.Arguments({
@@ -234,6 +269,41 @@ double WINAPI xll_option_implied(HANDLEX m, double f, double v, double k, double
 			option o(*m_.ptr());
 
 			return o.implied(f, v, std::abs(k), s, n, eps);
+		}
+	}
+	catch (const std::exception& ex) {
+		XLL_ERROR(ex.what());
+	}
+	catch (...) {
+		XLL_ERROR(__FUNCTION__ ": unknown exception");
+	}
+
+	return XLL_NAN;
+}
+
+AddIn xai_option_improve(
+	Function(XLL_DOUBLE, "xll_option_improve", "OPTION.IMPROVE")
+	.Arguments({
+		Arg(XLL_HANDLE, "m", "is a handle to a model."),
+		Arg(XLL_DOUBLE, "f", "is the forward."),
+		Arg(XLL_DOUBLE, "v", "is the option value."),
+		Arg(XLL_DOUBLE, "k", "is the strike."),
+		Arg(XLL_DOUBLE, "s", "is the initial vol guess. Default is 0.1"),
+		})
+		.FunctionHelp("Return the option improved vol.")
+	.Category("Option")
+	.HelpTopic("https://keithalewis.github.io/math/op.html")
+);
+double WINAPI xll_option_improve(HANDLEX m, double f, double v, double k, double s)
+{
+#pragma XLLEXPORT
+	try {
+		handle<variate_base<>> m_(m);
+
+		if (m_) {
+			option o(*m_.ptr());
+
+			return o.improve(s, f, v, k);
 		}
 	}
 	catch (const std::exception& ex) {
