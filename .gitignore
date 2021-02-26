@@ -9,3 +9,5 @@
 /.vs
 /packages/gsl-msvc-x86.2.4.0.8788
 /improve.xlsx
+/Release
+/x64/Release
