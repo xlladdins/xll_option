@@ -6,11 +6,9 @@
 using namespace fms;
 using namespace xll;
 
-// int breakme = [&]() { return _crtBreakAlloc = 620; }();
-
 AddIn xai_variate_normal(
 	Function(XLL_HANDLE, "xll_variate_normal", "VARIATE.NORMAL")
-	.Args({
+	.Arguments({
 		Arg(XLL_DOUBLE, "mu", "is the mean. Default is 0."),
 		Arg(XLL_DOUBLE, "sigma", "is the standard deviation. Default is 1.")
 	})
